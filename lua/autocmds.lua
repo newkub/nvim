@@ -1,0 +1,2 @@
+-- Autocommands for Neovim
+-- Removed automatic explorer opening to respect user preference
