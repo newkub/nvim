@@ -121,30 +121,22 @@ vim.keymap.set({ "n", "i", "v", "x" }, "<C-a>", function()
   end
 end, { desc = "Select All Text" })
 
--- Ctrl+Z for undo in normal and insert modes (like VS Code)
+-- Ctrl+Z for undo (without changing modes)
 vim.keymap.set({ "n", "i" }, "<C-z>", function()
   local status, err = pcall(function()
-    -- In insert mode, we need to exit to normal mode first, then undo, then go back to insert
-    if vim.api.nvim_get_mode().mode == "i" then
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>u", true, false, true), "nx", false)
-    else
-      vim.cmd("undo")
-    end
+    -- Perform undo without changing modes
+    vim.cmd("undo")
   end)
   if not status then
     vim.notify("Error performing undo: " .. tostring(err), vim.log.levels.ERROR)
   end
 end, { desc = "Undo" })
 
--- Ctrl+Shift+Z for redo in normal and insert modes (like VS Code)
+-- Ctrl+Shift+Z for redo (without changing modes)
 vim.keymap.set({ "n", "i" }, "<C-S-z>", function()
   local status, err = pcall(function()
-    -- In insert mode, we need to exit to normal mode first, then redo, then go back to insert
-    if vim.api.nvim_get_mode().mode == "i" then
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc><C-r>", true, false, true), "nx", false)
-    else
-      vim.cmd("redo")
-    end
+    -- Perform redo without changing modes
+    vim.cmd("redo")
   end)
   if not status then
     vim.notify("Error performing redo: " .. tostring(err), vim.log.levels.ERROR)

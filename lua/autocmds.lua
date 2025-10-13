@@ -47,3 +47,59 @@ vim.api.nvim_create_autocmd({"TermClose"}, {
     vim.cmd("silent! wa")
   end,
 })
+
+-- Save and restore cursor position
+-- This will remember the last cursor position in files
+vim.api.nvim_create_autocmd({"BufReadPost"}, {
+  pattern = "*",
+  callback = function()
+    -- Check if the file is a normal file (not a special buffer)
+    local bufname = vim.fn.bufname()
+    if bufname ~= "" and not bufname:match("dashboard") and not bufname:match("alpha") and not bufname:match("NvimTree") then
+      -- Restore cursor position
+      local status, err = pcall(function()
+        local line = vim.fn.line("'\"")
+        local col = vim.fn.col("'\"")
+        local total_lines = vim.fn.line("$")
+        
+        -- Check if the line number is valid
+        if line > 0 and line <= total_lines then
+          -- Move cursor to the last known position
+          vim.api.nvim_win_set_cursor(0, {line, col})
+        end
+      end)
+      
+      if not status then
+        vim.notify("Error restoring cursor position: " .. tostring(err), vim.log.levels.WARN)
+      end
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  pattern = "*",
+  callback = function()
+    -- Save cursor position before writing
+    local status, err = pcall(function()
+      vim.cmd("silent! mkview")
+    end)
+    
+    if not status then
+      vim.notify("Error saving cursor position: " .. tostring(err), vim.log.levels.WARN)
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({"BufReadPre"}, {
+  pattern = "*",
+  callback = function()
+    -- Restore cursor position when reading file
+    local status, err = pcall(function()
+      vim.cmd("silent! loadview")
+    end)
+    
+    if not status then
+      vim.notify("Error loading cursor position: " .. tostring(err), vim.log.levels.WARN)
+    end
+  end,
+})

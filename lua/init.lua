@@ -44,6 +44,9 @@ end
 vim.opt.backspace = "indent,eol,start"  -- Allow backspacing over everything in insert mode
 vim.opt.whichwrap = "b,s,<,>,[,]"       -- Allow wrapping of cursor to prev/next line
 
+-- Enable view options to save cursor position and other view settings
+vim.opt.viewoptions = "cursor,folds,slash,unix"
+
 -- Load plugins with error handling
 local status, err = pcall(function()
   require("lazy").setup("plugins")
