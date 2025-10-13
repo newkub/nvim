@@ -36,7 +36,17 @@ return {
             "diagnostics" 
           },
           lualine_c = { "filename" },
-          lualine_x = { "encoding", "fileformat", "filetype" },
+          lualine_x = { 
+            function()
+              local snacks_status, snacks = pcall(require, "snacks")
+              if snacks_status and snacks.profiler then
+                return snacks.profiler.status()
+              else
+                return ""
+              end
+            end,
+            "encoding", "fileformat", "filetype" 
+          },
           lualine_y = { "progress" },
           lualine_z = { "location" }
         },

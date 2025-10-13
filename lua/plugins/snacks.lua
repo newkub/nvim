@@ -90,6 +90,10 @@ return {
         end
       }
     },
+    profiler = {
+      -- your profiler configuration comes here
+      -- or leave it empty to use the default settings
+    },
     quickfile = { enabled = true },
     scope = { enabled = true },
     scroll = {
@@ -126,13 +130,22 @@ return {
   keys = {
     -- Top Pickers & Explorer
     { "<leader><space>", function() 
-        local status, err = pcall(function()
-          require("snacks").picker.smart()
-        end)
-        if not status then
-          vim.notify("Error opening smart picker: " .. tostring(err), vim.log.levels.ERROR)
-        end
-      end, desc = "Smart Find Files" },
+          -- Toggle behavior instead of opening smart picker
+          local status, err = pcall(function()
+            -- Check if we're on dashboard already
+            local bufname = vim.fn.bufname()
+            if bufname:match("dashboard") or bufname:match("alpha") then
+              -- If on dashboard, go to last buffer or create new one
+              vim.cmd("b#")
+            else
+              -- If not on dashboard, go to dashboard
+              require("snacks").dashboard()
+            end
+          end)
+          if not status then
+            vim.notify("Error toggling dashboard: " .. tostring(err), vim.log.levels.ERROR)
+          end
+        end, desc = "Toggle Dashboard" },
     { "<leader>,", function() 
         local status, err = pcall(function()
           require("snacks").picker.buffers()
@@ -513,6 +526,31 @@ return {
           vim.notify("Error opening colorschemes picker: " .. tostring(err), vim.log.levels.ERROR)
         end
       end, desc = "Colorschemes" },
+    -- Profiler mappings
+    { "<leader>pp", function() 
+        local status, err = pcall(function()
+          require("snacks").toggle.profiler()
+        end)
+        if not status then
+          vim.notify("Error toggling profiler: " .. tostring(err), vim.log.levels.ERROR)
+        end
+      end, desc = "Toggle Profiler" },
+    { "<leader>ph", function() 
+        local status, err = pcall(function()
+          require("snacks").toggle.profiler_highlights()
+        end)
+        if not status then
+          vim.notify("Error toggling profiler highlights: " .. tostring(err), vim.log.levels.ERROR)
+        end
+      end, desc = "Toggle Profiler Highlights" },
+    { "<leader>ps", function() 
+        local status, err = pcall(function()
+          require("snacks").profiler.scratch()
+        end)
+        if not status then
+          vim.notify("Error opening profiler scratch buffer: " .. tostring(err), vim.log.levels.ERROR)
+        end
+      end, desc = "Profiler Scratch Buffer" },
     -- Mason
     { "<leader>pm", function() 
         local status, err = pcall(function()
@@ -775,6 +813,9 @@ return {
           snacks.toggle.inlay_hints():map("<leader>uh")
           snacks.toggle.indent():map("<leader>ug")
           snacks.toggle.dim():map("<leader>uD")
+          -- Initialize profiler toggles
+          snacks.toggle.profiler():map("<leader>pp")
+          snacks.toggle.profiler_highlights():map("<leader>ph")
         else
           vim.notify("Error loading snacks for toggle mappings: " .. tostring(snacks), vim.log.levels.ERROR)
         end

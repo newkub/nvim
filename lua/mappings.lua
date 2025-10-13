@@ -190,15 +190,15 @@ vim.keymap.set("n", "<leader>e", function()
   end
 end, { desc = "File Explorer" })
 
--- F1 to open file picker
-vim.keymap.set("n", "<F1>", function()
+-- F1 to open file picker (override default help) - works in both normal and insert modes
+vim.keymap.set({ "n", "i" }, "<F1>", function()
   local status, err = pcall(function()
     require("snacks").picker()
   end)
   if not status then
     vim.notify("Error opening picker: " .. tostring(err), vim.log.levels.ERROR)
   end
-end, { desc = "File Picker" })
+end, { desc = "File Picker", noremap = true, silent = true })
 
 -- Ctrl+R to open recent files picker
 vim.keymap.set({ "n", "i" }, "<C-r>", function()
