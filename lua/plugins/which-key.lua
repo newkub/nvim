@@ -2,25 +2,23 @@ return {
   "folke/which-key.nvim",
   event = "VeryLazy",
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    spec = {
+      { "<leader>f", group = "File Operations" },
+      { "<leader>s", group = "Search Operations" },
+      { "<leader>g", group = "Git Operations" },
+      { "<leader>p", group = "Package Management" },
+      { "<leader>u", group = "UI Toggles" },
+      { "<leader>c", group = "Code Actions" },
+      { "<leader>x", group = "Diagnostics" },
+      { "<leader>b", group = "Buffer Operations" },
+      { "<leader>n", group = "Notifications" },
+    },
   },
   keys = {
     {
       "<leader>?",
-      function()
-        require("which-key").show({ global = false })
-      end,
+      "<cmd>WhichKey<cr>",
       desc = "Buffer Local Keymaps (which-key)",
-    },
-    -- Override the default <leader><space> mapping to do nothing instead of smart picker
-    {
-      "<leader><space>",
-      function()
-        -- Do nothing, just consume the keypress
-      end,
-      desc = "Disable Smart Picker",
     },
   },
 }
