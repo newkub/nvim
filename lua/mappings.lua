@@ -58,21 +58,17 @@ end
 -- Note: ESC key behavior is default Neovim behavior
 -- Pressing ESC in insert mode will switch to normal mode (no custom mapping needed)
 
--- Single ESC to return to home screen (instead of double ESC)
+-- ESC to toggle between insert and normal modes
+-- In insert mode: ESC goes to normal mode (default behavior)
+-- In normal mode: ESC goes to insert mode
 vim.keymap.set("n", "<Esc>", function()
-  -- Only trigger dashboard on ESC if we're not already on special buffers
-  local bufname = vim.fn.bufname()
-  if bufname == "" or bufname:match("dashboard") or bufname:match("alpha") or bufname:match("NvimTree") then
-    return
-  end
-  
   local status, err = pcall(function()
-    safe_dashboard()
+    vim.cmd("startinsert")
   end)
   if not status then
-    vim.notify("Error handling ESC: " .. tostring(err), vim.log.levels.ERROR)
+    vim.notify("Error entering insert mode: " .. tostring(err), vim.log.levels.ERROR)
   end
-end, { desc = "ESC to Home Screen" })
+end, { desc = "Toggle Insert Mode" })
 
 -- Ctrl+C to auto-save and return to home screen (from both normal and insert modes)
 vim.keymap.set({ "n", "i" }, "<C-c>", function()
@@ -114,8 +110,8 @@ end, { desc = "Force Return to Home" })
 -- Text Editing Operations
 -- ============================================================================
 
--- Ctrl+A to select all text (like VS Code)
-vim.keymap.set({ "n", "i" }, "<C-a>", function()
+-- Ctrl+A to select all text (like VS Code) - works in editor modes
+vim.keymap.set({ "n", "i", "v", "x" }, "<C-a>", function()
   local status, err = pcall(function()
     -- Select all text in the buffer
     vim.cmd("keepjumps normal! ggVG")

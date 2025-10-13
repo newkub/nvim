@@ -682,14 +682,6 @@ return {
           vim.notify("Error browsing git: " .. tostring(err), vim.log.levels.ERROR)
         end
       end, desc = "Git Browse", mode = { "n", "v" } },
-    { "<leader>gg", function() 
-        local status, err = pcall(function()
-          require("snacks").lazygit()
-        end)
-        if not status then
-          vim.notify("Error opening lazygit: " .. tostring(err), vim.log.levels.ERROR)
-        end
-      end, desc = "Lazygit" },
     { "<leader>un", function() 
         local status, err = pcall(function()
           require("snacks").notifier.hide()
