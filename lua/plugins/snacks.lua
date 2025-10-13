@@ -162,12 +162,12 @@ return {
       end, desc = "File Explorer" },
     { "<C-p>", function() 
         local status, err = pcall(function()
-          require("snacks").picker.files()
+          require("snacks").picker.smart()
         end)
         if not status then
-          vim.notify("Error opening file picker: " .. tostring(err), vim.log.levels.ERROR)
+          vim.notify("Error opening smart file picker: " .. tostring(err), vim.log.levels.ERROR)
         end
-      end, desc = "File Picker" },
+      end, desc = "Smart File Picker" },
     { "<C-S-f>", function() 
         local status, err = pcall(function()
           require("snacks").picker.files()
