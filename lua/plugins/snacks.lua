@@ -97,7 +97,20 @@ return {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     },
-    statuscolumn = { enabled = true },
+    statuscolumn = { 
+      enabled = true,
+      git = {
+        enabled = true,
+        signs = {
+          add = { text = "▎" },
+          change = { text = "▎" },
+          delete = { text = "" },
+          topdelete = { text = "" },
+          changedelete = { text = "▎" },
+          untracked = { text = "┆" },
+        },
+      },
+    },
     terminal = {
       -- your terminal configuration comes here
       -- or leave it empty to use the default settings
@@ -662,7 +675,7 @@ return {
         if not status then
           vim.notify("Error toggling terminal: " .. tostring(err), vim.log.levels.ERROR)
         end
-      end, desc = "which_key_ignore" },
+      end, desc = "Toggle Terminal" },
     { "]]",         function() 
         local status, err = pcall(function()
           require("snacks").words.jump(vim.v.count1)
@@ -776,6 +789,21 @@ return {
         local bufnr = vim.api.nvim_get_current_buf()
         if not vim.api.nvim_buf_is_valid(bufnr) then
           return
+        end
+      end,
+    })
+    
+    -- Enable sign column for Git signs
+    vim.opt.signcolumn = "yes"
+    
+    -- Autocommand to ensure we exit insert mode on dashboard
+    vim.api.nvim_create_autocmd("BufEnter", {
+      pattern = "*",
+      callback = function()
+        local bufname = vim.fn.bufname()
+        if bufname:match("dashboard") or bufname:match("alpha") then
+          -- Ensure we're in normal mode on dashboard
+          vim.cmd("stopinsert")
         end
       end,
     })

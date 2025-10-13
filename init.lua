@@ -36,6 +36,9 @@ vim.opt.updatetime = 8000  -- Increase update time to reduce swap file writes
 vim.opt.swapfile = true  -- Explicitly enable swap files
 vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"  -- Ensure proper swap directory
 
+-- Git integration settings
+vim.opt.signcolumn = "yes"  -- Always show sign column for Git signs
+
 -- Add error handling for vim.schedule callbacks
 local original_schedule = vim.schedule
 vim.schedule = function(fn)

@@ -7,5 +7,8 @@ return {
   require("plugins.noice"),
   require("plugins.trouble"),
   require("plugins.edgy"),
-  require("plugins.treesitter")
+  require("plugins.treesitter"),
+  require("plugins.git"),
+  require("plugins.mason"),
+  require("plugins.ai")
 }

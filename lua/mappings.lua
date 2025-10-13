@@ -16,15 +16,25 @@ local function safe_dashboard(opts)
   
   -- If force option is set, skip save check
   if opts.force then
-    require("snacks").dashboard({ force = true })
+    local status, err = pcall(function()
+      require("snacks").dashboard({ force = true })
+    end)
+    if not status then
+      vim.notify("Error opening dashboard (force): " .. tostring(err), vim.log.levels.ERROR)
+    end
     return
   end
   
   -- Check if current buffer has unsaved changes
-  local buf_modified = vim.api.nvim_buf_get_option(0, "modified")
+  local buf_modified = false
+  local buf_valid = vim.api.nvim_buf_is_valid(0)
+  
+  if buf_valid then
+    buf_modified = vim.api.nvim_buf_get_option(0, "modified")
+  end
   
   -- If buffer is modified, save it first
-  if buf_modified then
+  if buf_valid and buf_modified then
     local status, err = pcall(vim.cmd, "write")
     if not status then
       vim.notify("Error saving buffer: " .. tostring(err), vim.log.levels.ERROR)
@@ -32,8 +42,13 @@ local function safe_dashboard(opts)
     end
   end
   
-  -- Now navigate to dashboard
-  require("snacks").dashboard()
+  -- Now navigate to dashboard with proper error handling
+  local status, err = pcall(function()
+    require("snacks").dashboard()
+  end)
+  if not status then
+    vim.notify("Error opening dashboard: " .. tostring(err), vim.log.levels.ERROR)
+  end
 end
 
 -- ============================================================================
@@ -45,6 +60,12 @@ end
 
 -- Single ESC to return to home screen (instead of double ESC)
 vim.keymap.set("n", "<Esc>", function()
+  -- Only trigger dashboard on ESC if we're not already on special buffers
+  local bufname = vim.fn.bufname()
+  if bufname == "" or bufname:match("dashboard") or bufname:match("alpha") or bufname:match("NvimTree") then
+    return
+  end
+  
   local status, err = pcall(function()
     safe_dashboard()
   end)
@@ -144,6 +165,17 @@ vim.keymap.set("i", "<C-BS>", function()
   end
 end, { desc = "Delete word backward" })
 
+-- Ctrl+X to delete entire line in insert mode (like VS Code)
+vim.keymap.set("i", "<C-x>", function()
+  local status, err = pcall(function()
+    -- Exit to normal mode, delete the line, then go back to insert mode
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>ddi", true, false, true), "n", true)
+  end)
+  if not status then
+    vim.notify("Error deleting line: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Delete entire line" })
+
 -- ============================================================================
 -- File & Buffer Operations
 -- ============================================================================
@@ -188,8 +220,8 @@ vim.keymap.set({ "n", "i" }, "<C-p>", function()
   end
 end, { desc = "Smart File Picker" })
 
--- Ctrl+P+P to switch back to the last visited file (like VS Code)
-vim.keymap.set({ "n", "i" }, "<C-p><C-p>", function()
+-- Ctrl+L to switch back to the last visited file (like VS Code)
+vim.keymap.set({ "n", "i" }, "<C-l>", function()
   local status, err = pcall(function()
     -- This uses the built-in Ctrl+^ functionality to switch to the last visited file
     vim.cmd("e #")
@@ -197,7 +229,7 @@ vim.keymap.set({ "n", "i" }, "<C-p><C-p>", function()
   if not status then
     vim.notify("Error switching to last file: " .. tostring(err), vim.log.levels.ERROR)
   end
-end, { desc = "Switch to Last File", remap = true })
+end, { desc = "Switch to Last File" })
 
 -- ============================================================================
 -- Terminal & System Operations
@@ -233,3 +265,72 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end
   end,
 })
+
+-- ============================================================================
+-- AI Assistance
+-- ============================================================================
+
+-- GitHub Copilot mappings
+vim.keymap.set("i", "<M-l>", function()
+  local status, err = pcall(function()
+    vim.fn['copilot#Accept']('')
+  end)
+  if not status then
+    vim.notify("Error accepting Copilot suggestion: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Accept Copilot Suggestion", silent = true, expr = true })
+
+vim.keymap.set("i", "<M-[>", function()
+  local status, err = pcall(function()
+    vim.fn['copilot#Previous']()
+  end)
+  if not status then
+    vim.notify("Error going to previous Copilot suggestion: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Previous Copilot Suggestion" })
+
+vim.keymap.set("i", "<M-]>", function()
+  local status, err = pcall(function()
+    vim.fn['copilot#Next']()
+  end)
+  if not status then
+    vim.notify("Error going to next Copilot suggestion: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Next Copilot Suggestion" })
+
+vim.keymap.set("i", "<C-]>", function()
+  local status, err = pcall(function()
+    vim.fn['copilot#Dismiss']()
+  end)
+  if not status then
+    vim.notify("Error dismissing Copilot suggestion: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Dismiss Copilot Suggestion" })
+
+-- Codeium mappings
+vim.keymap.set("i", "<M-=>", function()
+  local status, err = pcall(function()
+    vim.fn['codeium#Accept']()
+  end)
+  if not status then
+    vim.notify("Error accepting Codeium suggestion: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Accept Codeium Suggestion" })
+
+vim.keymap.set("i", "<M->>", function()
+  local status, err = pcall(function()
+    vim.fn['codeium#CycleCompletions'](1)
+  end)
+  if not status then
+    vim.notify("Error cycling Codeium completions: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Next Codeium Completion" })
+
+vim.keymap.set("i", "<M-<>", function()
+  local status, err = pcall(function()
+    vim.fn['codeium#CycleCompletions'](-1)
+  end)
+  if not status then
+    vim.notify("Error cycling Codeium completions: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Previous Codeium Completion" })
