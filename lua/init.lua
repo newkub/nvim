@@ -29,6 +29,12 @@ if vim.fn.isdirectory(swap_dir) == 0 then
   vim.fn.mkdir(swap_dir, "p")
 end
 
+-- Create undo directory if it doesn't exist
+local undo_dir = vim.fn.stdpath("data") .. "/undodir"
+if vim.fn.isdirectory(undo_dir) == 0 then
+  vim.fn.mkdir(undo_dir, "p")
+end
+
 -- Add error handling for vim.schedule callbacks
 local original_schedule = vim.schedule
 vim.schedule = function(fn)
@@ -46,6 +52,10 @@ vim.opt.whichwrap = "b,s,<,>,[,]"       -- Allow wrapping of cursor to prev/next
 
 -- Enable view options to save cursor position and other view settings
 vim.opt.viewoptions = "cursor,folds,slash,unix"
+
+-- Enable persistent undo
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath("data") .. "/undodir"
 
 -- Load plugins with error handling
 local status, err = pcall(function()

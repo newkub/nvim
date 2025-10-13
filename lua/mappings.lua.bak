@@ -1,18 +1,5 @@
 -- Custom key mappings for Neovim
 
--- Main mappings module that loads all sub-modules
-
--- Load all mapping categories
-require("mappings.navigation")
-require("mappings.editing")
-require("mappings.files")
-require("mappings.system")
-require("mappings.ai")
-require("mappings.autocmds")
-
--- This file serves as the entry point for all key mappings
--- Each category of mappings is organized in its own file for better maintainability
-
 -- ============================================================================
 -- Helper Functions
 -- ============================================================================

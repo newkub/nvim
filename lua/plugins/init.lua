@@ -11,5 +11,6 @@ return {
   require("plugins.git"),
   require("plugins.mason"),
   require("plugins.ai"),
-  require("plugins.markdown")
+  require("plugins.markdown"),
+  require("plugins.undotree")
 }
