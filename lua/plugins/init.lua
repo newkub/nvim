@@ -2,6 +2,10 @@ return {
   require("plugins.snacks"),
   require("plugins.theme"),
   require("plugins.statusline"),
-  require("plugins.mason"),
-  require("plugins.which-key")
+  require("plugins.which-key"),
+  require("plugins.cmp"),
+  require("plugins.noice"),
+  require("plugins.trouble"),
+  require("plugins.edgy"),
+  require("plugins.treesitter")
 }

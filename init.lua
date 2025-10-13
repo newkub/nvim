@@ -19,6 +19,27 @@ vim.opt.rtp:prepend(lazypath)
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
+-- Swap file settings to prevent E325 errors
+vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"
+vim.opt.swapfile = true
+
+-- Create swap directory if it doesn't exist
+local swap_dir = vim.fn.stdpath("data") .. "/swap/"
+if vim.fn.isdirectory(swap_dir) == 0 then
+  vim.fn.mkdir(swap_dir, "p")
+end
+
+-- Add error handling for vim.schedule callbacks
+local original_schedule = vim.schedule
+vim.schedule = function(fn)
+  return original_schedule(function()
+    local status, result = pcall(fn)
+    if not status then
+      vim.notify("Error in scheduled callback: " .. tostring(result), vim.log.levels.ERROR)
+    end
+  end)
+end
+
 -- Load plugins
 require("lazy").setup("plugins")
 
