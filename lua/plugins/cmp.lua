@@ -27,7 +27,10 @@ return {
         ["<C-e>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
+          local codeium_available, codeium = pcall(require, "codeium.virtual_text")
+          if codeium_available and codeium.has_suggestion() then
+            codeium.accept()
+          elseif cmp.visible() then
             cmp.select_next_item()
           elseif luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
@@ -46,6 +49,7 @@ return {
         end, { "i", "s" }),
       }),
       sources = cmp.config.sources({
+        { name = "codeium", priority = 1000 },
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },

@@ -10,7 +10,7 @@ vim.keymap.set("i", "<M-l>", function()
   end
 end, { desc = "Accept Copilot Suggestion", silent = true, expr = true })
 
-vim.keymap.set("i", "<M-[>", function()
+vim.keymap.set("i", "<C-M-[>", function()
   local status, err = pcall(function()
     vim.fn['copilot#Previous']()
   end)
@@ -19,7 +19,7 @@ vim.keymap.set("i", "<M-[>", function()
   end
 end, { desc = "Previous Copilot Suggestion" })
 
-vim.keymap.set("i", "<M-]>", function()
+vim.keymap.set("i", "<C-M-]>", function()
   local status, err = pcall(function()
     vim.fn['copilot#Next']()
   end)
@@ -64,3 +64,31 @@ vim.keymap.set("i", "<M-<>", function()
     vim.notify("Error cycling Codeium completions: " .. tostring(err), vim.log.levels.ERROR)
   end
 end, { desc = "Previous Codeium Completion" })
+
+-- Windsurf (Codeium) Lua API mappings
+vim.keymap.set("n", "<leader>ca", "<cmd>Codeium Auth<CR>", { desc = "Windsurf: Authenticate" })
+vim.keymap.set("n", "<leader>cc", "<cmd>Codeium Chat<CR>", { desc = "Windsurf: Open Chat" })
+vim.keymap.set("n", "<leader>ct", "<cmd>Codeium Toggle<CR>", { desc = "Windsurf: Toggle Completion" })
+
+-- Virtual text navigation (Alt-] / Alt-[)
+vim.keymap.set("i", "<M-]>", function()
+  local status, codeium = pcall(require, "codeium.virtual_text")
+  if status then
+    codeium.cycle_or_complete(1)
+  end
+end, { desc = "Windsurf: Next Suggestion" })
+
+vim.keymap.set("i", "<M-[>", function()
+  local status, codeium = pcall(require, "codeium.virtual_text")
+  if status then
+    codeium.cycle_or_complete(-1)
+  end
+end, { desc = "Windsurf: Previous Suggestion" })
+
+-- Clear virtual text
+vim.keymap.set("i", "<C-x>", function()
+  local status, codeium = pcall(require, "codeium.virtual_text")
+  if status then
+    codeium.clear()
+  end
+end, { desc = "Windsurf: Clear Suggestion" })
