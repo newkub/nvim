@@ -2,6 +2,9 @@
 
 return {
   n = {
+    -- Command Palette (VS Code style: F1)
+    ["<F1>"] = { function() require("snacks").picker() end, "Pick a Picker" },
+
     -- Open Terminal (VS Code style: Ctrl+`)
     ["<C-`>"] = { ":terminal pwsh<CR>", "Open Terminal" },
 
