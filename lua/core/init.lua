@@ -24,3 +24,11 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load plugins
 require("lazy").setup("plugins")
+
+-- Open file picker on first start
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    require("snacks").picker.files()
+  end,
+})
