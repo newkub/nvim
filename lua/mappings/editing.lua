@@ -222,3 +222,6 @@ vim.keymap.set("n", "<A-Right>", function()
     vim.notify("Error going forward: " .. tostring(err), vim.log.levels.ERROR)
   end
 end, { desc = "Go Forward" })
+
+-- Ctrl+C to copy selected text in visual mode
+vim.keymap.set('v', '<C-c>', '"+y', { noremap = true, silent = true })
