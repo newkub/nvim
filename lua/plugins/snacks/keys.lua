@@ -17,7 +17,7 @@ return {
     else
       require("snacks").dashboard()
     end
-  end, "Error toggling dashboard"), desc = "Toggle Dashboard" },
+  end, "Error toggling dashboard"), desc = "Toggle Dashboard", mode = "n" },
   
   { "<leader>,", safe_call(function() require("snacks").picker.buffers() end, "Error opening buffers picker"), desc = "Buffers" },
   { "<leader>/", safe_call(function() require("snacks").picker.grep() end, "Error opening grep picker"), desc = "Grep" },
