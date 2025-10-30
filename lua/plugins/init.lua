@@ -1,5 +1,5 @@
 return {
-  require("plugins.snacks.init"),
+  require("plugins.snacks"),
   require("plugins.theme"),
   require("plugins.statusline"),
   require("plugins.which-key"),
