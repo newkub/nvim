@@ -62,6 +62,7 @@ return {
     sources = {
       files = {
         hidden = true,  -- แสดง hidden files และ folders (ที่ขึ้นต้นด้วย .)
+        follow = true,  -- เรียงตามไฟล์ที่เปิดล่าสุด (frecency)
       },
     },
     hooks = {
