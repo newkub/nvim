@@ -19,6 +19,17 @@ vim.opt.rtp:prepend(lazypath)
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
+-- Encoding settings for Thai language support
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+vim.opt.fileencodings = "utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936"
+vim.scriptencoding = "utf-8"
+
+-- GUI font settings (if using a GUI version of Neovim)
+if vim.fn.has("gui_running") == 1 then
+  vim.opt.guifont = "Consolas:h11"
+end
+
 -- Swap file settings to prevent E325 errors
 vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"
 vim.opt.swapfile = true

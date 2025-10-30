@@ -1,3 +1,0 @@
--- This file is no longer used
--- Plugin configuration has been moved to init.lua in this same directory
--- You can safely delete this file

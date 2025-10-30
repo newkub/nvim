@@ -59,6 +59,11 @@ return {
   },
   picker = { 
     enabled = true,
+    sources = {
+      files = {
+        hidden = true,  -- แสดง hidden files และ folders (ที่ขึ้นต้นด้วย .)
+      },
+    },
     hooks = {
       on_error = function(err)
         vim.notify("Picker error: " .. tostring(err), vim.log.levels.ERROR)

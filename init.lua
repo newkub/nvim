@@ -21,6 +21,17 @@ vim.opt.background = "dark"
 vim.opt.number = true
 vim.opt.backspace = "indent,eol,start"
 
+-- Encoding settings for Thai language support
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+vim.opt.fileencodings = "utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936"
+vim.scriptencoding = "utf-8"
+
+-- GUI font settings (if using a GUI version of Neovim)
+if vim.fn.has("gui_running") == 1 then
+  vim.opt.guifont = "Consolas:h11"
+end
+
 -- Indentation settings
 vim.opt.autoindent = true      -- Copy indent from current line when starting new line
 vim.opt.smartindent = true     -- Smart autoindenting when starting a new line
