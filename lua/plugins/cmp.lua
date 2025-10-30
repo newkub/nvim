@@ -13,6 +13,9 @@ return {
     local luasnip = require("luasnip")
     
     return {
+      completion = {
+        autocomplete = false,
+      },
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
@@ -27,16 +30,8 @@ return {
         ["<C-e>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp.mapping(function(fallback)
-          local codeium_available, codeium = pcall(require, "codeium.virtual_text")
-          if codeium_available and codeium.has_suggestion() then
-            codeium.accept()
-          elseif cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          else
-            fallback()
-          end
+          -- เลื่อน cursor ไปยัง word ถัดไป
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-o>w", true, false, true), "n", false)
         end, { "i", "s" }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
@@ -64,9 +59,7 @@ return {
         end,
       },
       experimental = {
-        ghost_text = {
-          hl_group = "LspCodeLens",
-        },
+        ghost_text = false,
       },
     }
   end,

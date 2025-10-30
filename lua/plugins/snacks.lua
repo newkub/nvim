@@ -70,7 +70,7 @@ return {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     },
-    indent = { enabled = true },
+    indent = { enabled = false },
     input = {
       -- your input configuration comes here
       -- or leave it empty to use the default settings
@@ -188,7 +188,7 @@ return {
       end, desc = "File Explorer" },
     { "<C-p>", function() 
         local status, err = pcall(function()
-          require("snacks").picker.smart()
+          require("snacks").picker.files()
         end)
         if not status then
           vim.notify("Error opening smart file picker: " .. tostring(err), vim.log.levels.ERROR)

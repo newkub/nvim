@@ -18,6 +18,8 @@ vim.opt.rtp:prepend(lazypath)
 -- Basic settings
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
+vim.opt.number = true
+vim.opt.backspace = "indent,eol,start"
 
 -- Enhanced swap file settings to prevent E325 errors
 vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"
@@ -61,3 +63,13 @@ require("autocmds")
 
 -- Load key mappings
 require("mappings")
+
+-- Open file picker on startup
+vim.api.nvim_create_autocmd("VimEnter", {
+  pattern = "*",
+  callback = function()
+    if vim.fn.argc() == 0 then -- Only run if no file was specified
+      require("snacks").picker.files()
+    end
+  end,
+})
