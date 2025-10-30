@@ -215,12 +215,29 @@ end, { desc = "Go Forward" })
 
 -- VS Code style Cut/Copy/Paste
 
--- Cut line (Normal and Visual mode)
-vim.keymap.set({ 'n', 'v' }, '<C-x>', '"+dd', { desc = 'Cut Line' })
+-- Cut selection in Visual mode with custom notification
+vim.keymap.set('v', '<C-x>', function()
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
+  vim.cmd('normal! gv"+d')
+  local line_count = end_line - start_line + 1
+  local message = "Cut " .. line_count .. (line_count > 1 and " lines" or " line") .. " to clipboard"
+  vim.notify(message, vim.log.levels.INFO, { title = "Clipboard" })
+end, { desc = 'Cut Selection' })
+-- Cut line in Normal mode
+vim.keymap.set('n', '<C-x>', '"+dd', { desc = 'Cut Line' })
 -- Cut line (Insert mode)
 vim.keymap.set('i', '<C-x>', '<Esc>"+ddi', { desc = 'Cut Line' })
 
--- The <C-c> mapping was moved to system.lua to handle the exit behavior.
+-- Copy selection in Visual mode with custom notification
+vim.keymap.set('v', '<C-c>', function()
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
+  vim.cmd('normal! gv"+y')
+  local line_count = end_line - start_line + 1
+  local message = "Copied " .. line_count .. (line_count > 1 and " lines" or " line") .. " to clipboard"
+  vim.notify(message, vim.log.levels.INFO, { title = "Clipboard" })
+end, { desc = 'Copy Selection' })
 
 -- Paste (Normal and Visual mode)
 vim.keymap.set({ 'n', 'v' }, '<C-v>', '"+P', { desc = 'Paste' })

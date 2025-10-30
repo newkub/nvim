@@ -49,15 +49,10 @@ end
 
 -- ESC to toggle between insert and normal modes
 -- In insert mode: ESC goes to normal mode (default behavior)
--- In normal mode: ESC goes to insert mode
-vim.keymap.set("n", "<Esc>", function()
-  local status, err = pcall(function()
-    vim.cmd("startinsert")
-  end)
-  if not status then
-    vim.notify("Error entering insert mode: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Toggle Insert Mode" })
+-- Esc to return to the home screen (dashboard) from any mode
+vim.keymap.set({ "n", "i", "v" }, "<Esc>", function()
+  safe_dashboard()
+end, { desc = "Return to Home" })
 
 -- The keymap for <C-c> was removed to avoid conflict with 'copy' functionality.
 
