@@ -1,0 +1,1 @@
+-- Keymappings are setup by which-key plugin spec in plugins/which-key.lua

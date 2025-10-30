@@ -1,88 +1,16 @@
 -- AI assistance key mappings for Neovim
 
--- GitHub Copilot mappings
-vim.keymap.set("i", "<M-l>", function()
-  local status, err = pcall(function()
-    vim.fn['copilot#Accept']('')
-  end)
-  if not status then
-    vim.notify("Error accepting Copilot suggestion: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Accept Copilot Suggestion", silent = true, expr = true })
+return {
+  i = {
+    -- GitHub Copilot
+    ["<M-l>"] = { "copilot#Accept('')", "Accept Copilot Suggestion", { expr = true, silent = true } },
+    ["<M-[>"] = { "copilot#Previous()", "Previous Copilot Suggestion", { expr = true } },
+    ["<M-]>"] = { "copilot#Next()", "Next Copilot Suggestion", { expr = true } },
+    ["<C-]>"] = { "copilot#Dismiss()", "Dismiss Copilot Suggestion", { expr = true } },
 
-vim.keymap.set("i", "<C-M-[>", function()
-  local status, err = pcall(function()
-    vim.fn['copilot#Previous']()
-  end)
-  if not status then
-    vim.notify("Error going to previous Copilot suggestion: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Previous Copilot Suggestion" })
-
-vim.keymap.set("i", "<C-M-]>", function()
-  local status, err = pcall(function()
-    vim.fn['copilot#Next']()
-  end)
-  if not status then
-    vim.notify("Error going to next Copilot suggestion: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Next Copilot Suggestion" })
-
-vim.keymap.set("i", "<C-]>", function()
-  local status, err = pcall(function()
-    vim.fn['copilot#Dismiss']()
-  end)
-  if not status then
-    vim.notify("Error dismissing Copilot suggestion: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Dismiss Copilot Suggestion" })
-
--- Codeium mappings
-vim.keymap.set("i", "<M-=>", function()
-  local status, err = pcall(function()
-    vim.fn['codeium#Accept']()
-  end)
-  if not status then
-    vim.notify("Error accepting Codeium suggestion: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Accept Codeium Suggestion" })
-
-vim.keymap.set("i", "<M->>", function()
-  local status, err = pcall(function()
-    vim.fn['codeium#CycleCompletions'](1)
-  end)
-  if not status then
-    vim.notify("Error cycling Codeium completions: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Next Codeium Completion" })
-
-vim.keymap.set("i", "<M-<>", function()
-  local status, err = pcall(function()
-    vim.fn['codeium#CycleCompletions'](-1)
-  end)
-  if not status then
-    vim.notify("Error cycling Codeium completions: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Previous Codeium Completion" })
-
--- Windsurf (Codeium) Lua API mappings
-vim.keymap.set("n", "<leader>ca", "<cmd>Codeium Auth<CR>", { desc = "Windsurf: Authenticate" })
-vim.keymap.set("n", "<leader>cc", "<cmd>Codeium Chat<CR>", { desc = "Windsurf: Open Chat" })
-vim.keymap.set("n", "<leader>ct", "<cmd>Codeium Toggle<CR>", { desc = "Windsurf: Toggle Completion" })
-
--- Virtual text navigation (Alt-] / Alt-[)
-vim.keymap.set("i", "<M-]>", function()
-  local status, codeium = pcall(require, "codeium.virtual_text")
-  if status then
-    codeium.cycle_or_complete(1)
-  end
-end, { desc = "Windsurf: Next Suggestion" })
-
-vim.keymap.set("i", "<M-[>", function()
-  local status, codeium = pcall(require, "codeium.virtual_text")
-  if status then
-    codeium.cycle_or_complete(-1)
-  end
-end, { desc = "Windsurf: Previous Suggestion" })
-
--- The keymap for <C-x> was removed to avoid conflict with 'cut line' functionality.
+    -- Codeium
+    ["<M-=>"] = { "codeium#Accept()", "Accept Codeium Suggestion", { expr = true } },
+    ["<M->>"] = { "codeium#CycleCompletions(1)", "Next Codeium Completion", { expr = true } },
+    ["<M-<>"] = { "codeium#CycleCompletions(-1)", "Previous Codeium Completion", { expr = true } },
+  },
+}

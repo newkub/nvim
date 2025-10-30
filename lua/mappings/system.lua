@@ -1,76 +1,24 @@
--- Terminal and system operations key mappings for Neovim
+-- VS Code style system operations key mappings for Neovim
 
--- Ctrl+T to open terminal with PowerShell
-vim.keymap.set("n", "<C-t>", function()
-  local status, err = pcall(function()
-    vim.cmd("terminal pwsh")
-  end)
-  if not status then
-    vim.notify("Error opening terminal: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Open PowerShell Terminal" })
+return {
+  n = {
+    -- Open Terminal (VS Code style: Ctrl+`)
+    ["<C-`>"] = { ":terminal pwsh<CR>", "Open Terminal" },
 
--- F5 to start debugging (like VS Code)
-vim.keymap.set("n", "<F5>", function()
-  local status, err = pcall(function()
-    -- Start debugging
-    vim.cmd("lua require('dap').continue()")
-  end)
-  if not status then
-    vim.notify("Error starting debugger: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Start Debugging" })
+    -- Quit Neovim
+    ["<C-c>"] = { function() vim.notify("Press :qa to quit Neovim", vim.log.levels.INFO, { title = "System" }) end, "Show Quit Hint" },
 
--- Shift+F5 to stop debugging (like VS Code)
-vim.keymap.set("n", "<S-F5>", function()
-  local status, err = pcall(function()
-    -- Stop debugging
-    vim.cmd("lua require('dap').terminate()")
-  end)
-  if not status then
-    vim.notify("Error stopping debugger: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Stop Debugging" })
+    -- Copy Line
+    ["<C-y>"] = { '"+yy', "Copy Line" },
+  },
 
--- F9 to toggle breakpoint (like VS Code)
-vim.keymap.set("n", "<F9>", function()
-  local status, err = pcall(function()
-    -- Toggle breakpoint
-    vim.cmd("lua require('dap').toggle_breakpoint()")
-  end)
-  if not status then
-    vim.notify("Error toggling breakpoint: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Toggle Breakpoint" })
+  i = {
+    -- Exit to Normal Mode
+    ["<C-c>"] = { "<Esc>", "Exit to Normal Mode" },
+  },
 
--- Ctrl+Shift+M to toggle problems panel (like VS Code)
-vim.keymap.set("n", "<C-S-m>", function()
-  local status, err = pcall(function()
-    -- Toggle problems panel
-    vim.cmd("TroubleToggle")
-  end)
-  if not status then
-    vim.notify("Error toggling problems panel: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Toggle Problems Panel" })
-
--- Ctrl+Shift+V to paste from clipboard (like VS Code)
-vim.keymap.set("n", "<C-S-v>", function()
-  local status, err = pcall(function()
-    -- Paste from system clipboard
-    vim.cmd("normal \"+p")
-  end)
-  if not status then
-    vim.notify("Error pasting from clipboard: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Paste from Clipboard" })
-
--- Two-step Ctrl+C behavior:
--- 1. In Insert mode, pressing Ctrl+C goes to Normal mode.
--- 2. In Normal mode, pressing Ctrl+C quits Neovim.
-
-vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Exit to Normal Mode" })
-
-vim.keymap.set("n", "<C-c>", function()
-  vim.cmd("q")
-end, { desc = "Quit Neovim" })
+  v = {
+    -- Copy Selection
+    ["<C-y>"] = { '"+y', "Copy Selection" },
+  },
+}

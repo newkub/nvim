@@ -1,102 +1,25 @@
--- File and buffer operations key mappings for Neovim
+-- VS Code style file operations key mappings for Neovim
 
--- Ctrl+R to open recent files picker
-vim.keymap.set({ "n", "i" }, "<C-r>", function()
-  local status, err = pcall(function()
-    require("snacks").picker.recent()
-  end)
-  if not status then
-    vim.notify("Error opening recent files picker: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Recent Files Picker" })
+return {
+  n = {
+    -- File Picker (VS Code style: Ctrl+P)
+    ["<C-p>"] = { function() require("snacks").picker.files() end, "Find File" },
 
--- Ctrl+P to open file picker
-vim.keymap.set({ "n", "i" }, "<C-p>", function()
-  local status, err = pcall(function()
-    require("snacks").picker.files()
-  end)
-  if not status then
-    vim.notify("Error opening file picker: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "File Picker" })
+    -- Recent Files (VS Code style: Ctrl+R)
+    ["<C-r>"] = { function() require("snacks").picker.recent() end, "Recent Files" },
 
--- Shift+F to open file picker
-vim.keymap.set({ "n", "i" }, "<S-f>", function()
-  local status, err = pcall(function()
-    require("snacks").picker.files()
-  end)
-  if not status then
-    vim.notify("Error opening file picker: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "File Picker" })
+    -- Switch to Last File
+    ["<C-l>"] = { ":e #<CR>", "Switch to Last File" },
 
--- Ctrl+F to find in current buffer (like VS Code)
-vim.keymap.set({ "n", "i" }, "<C-f>", function()
-  -- This is a placeholder. For a true VS Code experience, a plugin like flash.nvim or telescope is needed.
-  -- For now, we map it to the default search.
-  vim.api.nvim_feedkeys("/", "n", true)
-end, { desc = "Find in File" })
+    -- Save File (VS Code style: Ctrl+S)
+    ["<C-s>"] = { ":w<CR>", "Save File" },
 
--- Ctrl+Shift+F to open file picker grep (like VS Code)
-vim.keymap.set({ "n", "i" }, "<C-S-f>", function()
-  local status, err = pcall(function()
-    require("snacks").picker.grep()
-  end)
-  if not status then
-    vim.notify("Error opening grep picker: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Grep in Files" })
+    -- Undo Tree
+    ["<leader>u"] = { ":UndotreeToggle<CR>", "Toggle Undo Tree" },
+  },
 
--- Ctrl+L to switch back to the last visited file (like VS Code)
-vim.keymap.set({ "n", "i" }, "<C-l>", function()
-  local status, err = pcall(function()
-    -- This uses the built-in Ctrl+^ functionality to switch to the last visited file
-    vim.cmd("e #")
-  end)
-  if not status then
-    vim.notify("Error switching to last file: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Switch to Last File" })
-
--- Undotree mapping
-vim.keymap.set("n", "<leader>u", function()
-  local status, err = pcall(function()
-    vim.cmd("UndotreeToggle")
-  end)
-  if not status then
-    vim.notify("Error toggling undotree: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Toggle Undo Tree" })
-
--- Ctrl+N to create new file (like VS Code)
-vim.keymap.set("n", "<C-n>", function()
-  local status, err = pcall(function()
-    -- Create new file
-    vim.cmd("enew")
-  end)
-  if not status then
-    vim.notify("Error creating new file: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "New File" })
-
--- Ctrl+O to open file (like VS Code)
-vim.keymap.set("n", "<C-o>", function()
-  local status, err = pcall(function()
-    -- Open file dialog
-    require("snacks").picker.files()
-  end)
-  if not status then
-    vim.notify("Error opening file dialog: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Open File" })
-
--- Ctrl+S to save file (like VS Code)
-vim.keymap.set({ "n", "i" }, "<C-s>", function()
-  local status, err = pcall(function()
-    -- Save current file
-    vim.cmd("write")
-  end)
-  if not status then
-    vim.notify("Error saving file: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Save File" })
+  i = {
+    -- Save File
+    ["<C-s>"] = { "<C-o>:w<CR>", "Save File" },
+  },
+}

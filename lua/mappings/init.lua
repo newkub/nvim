@@ -1,22 +1,27 @@
--- Main mappings file that loads all sub-modules
+-- Main mappings file that loads and sets all keymaps
 
--- Load navigation mappings
-require("mappings.navigation")
+local M = {}
 
--- Load text editing mappings
-require("mappings.editing")
+function M.setup()
+  local mappings = {
+    require("mappings.navigation"),
+    require("mappings.editing"),
+    require("mappings.files"),
+    require("mappings.system"),
+    require("mappings.ai"),
+  }
 
--- Load file operations mappings
-require("mappings.files")
+  for _, category in ipairs(mappings) do
+    for mode, maps in pairs(category) do
+      for key, map in pairs(maps) do
+        local action = map[1]
+        local desc = map[2]
+        local opts = map[3] or {}
+        opts.desc = desc
+        vim.keymap.set(mode, key, action, opts)
+      end
+    end
+  end
+end
 
--- Load system operations mappings
-require("mappings.system")
-
--- Load AI assistance mappings
-require("mappings.ai")
-
--- Load autocmds
-require("mappings.autocmds")
-
--- This file serves as the entry point for all key mappings
--- Each category of mappings is organized in its own file for better maintainability
+return M

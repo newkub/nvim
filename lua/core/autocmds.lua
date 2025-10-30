@@ -103,3 +103,5 @@ vim.api.nvim_create_autocmd({"BufReadPre"}, {
     end
   end,
 })
+
+-- Open file picker on startup functionality has been moved to the snacks plugin spec
