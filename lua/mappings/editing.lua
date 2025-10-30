@@ -27,6 +27,7 @@ return {
 
     -- Cut/Paste
     ["<C-v>"] = { "<C-r>+", "Paste" },
+    ["<C-x>"] = { "<C-o>dd", "Delete Line" },
 
     -- Select All
     ["<C-a>"] = { "<C-o>ggVG", "Select All" },

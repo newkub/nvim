@@ -21,9 +21,6 @@ return {
   },
 
   v = {
-    -- Quit Neovim
-    ["<C-c>"] = { function() vim.cmd("qa") end, "Quit Neovim" },
-
     -- Copy Selection
     ["<C-y>"] = { '"+y', "Copy Selection" },
   },
