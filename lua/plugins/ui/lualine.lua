@@ -27,16 +27,36 @@ return {
           {
             "branch",
             icon = "",
-          }, 
-          {
-            "diff",
-            symbols = { added = " ", modified = " ", removed = " " },
-          }, 
-          "diagnostics" 
+          },
+          "diff",
+          "diagnostics"
         },
-        lualine_c = { "filename" },
-        lualine_x = { 
-          "encoding", "fileformat", "filetype" 
+        lualine_c = { 
+          {
+            function()
+              local path = vim.fn.expand('%:p:~')
+              local size = vim.fn.getfsize(vim.fn.expand('%:p'))
+              local size_str = size > 0 and string.format('%.1f', size/1024)..'KB' or ''
+              return path .. (size_str ~= '' and ' ('..size_str..')' or '')
+            end,
+          },
+        },
+        lualine_x = {
+          {
+            function()
+              if package.loaded['battery'] then
+                return require('battery').get_status()
+              end
+              return ''
+            end,
+          },
+          {
+            function()
+              local clients = vim.lsp.get_active_clients()
+              return #clients > 0 and 'LSP:'..#clients or ''
+            end,
+          },
+          "filetype"
         },
         lualine_y = { "progress" },
         lualine_z = { "location" }
