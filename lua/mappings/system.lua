@@ -9,7 +9,7 @@ return {
     ["<C-`>"] = { ":terminal pwsh<CR>", "Open Terminal" },
 
     -- Quit Neovim
-    ["<C-c>"] = { function() vim.cmd("qa") end, "Quit Neovim" },
+    ["<C-c>"] = { function() vim.cmd("q!") end, "Quit Neovim" },
 
     -- Copy Line
     ["<C-y>"] = { '"+yy', "Copy Line" },
