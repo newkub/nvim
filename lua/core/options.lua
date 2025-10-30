@@ -40,3 +40,4 @@ vim.opt.signcolumn = "yes"  -- Always show sign column for Git signs
 -- Cursor settings
 vim.opt.guicursor = "a:ver25-blinkon0"
 vim.opt.cursorline = true
+vim.opt.virtualedit = "onemore"
