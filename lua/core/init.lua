@@ -6,7 +6,6 @@ vim.g.mapleader = " "
 -- Load core modules
 require("core.options")
 require("core.autocmds")
-require("core.keymaps")
 require("core.theme")
 
 -- Set up lazy.nvim plugin manager
