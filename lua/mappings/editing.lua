@@ -54,16 +54,9 @@ vim.keymap.set("i", "<C-x>", function()
   end
 end, { desc = "Delete entire line" })
 
--- Backspace in insert mode - delete selected text if any, otherwise normal backspace
-vim.keymap.set("i", "<BS>", function()
-  local status, err = pcall(function()
-    -- Use the built-in delete functionality for selected text
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-h>", true, false, true), "n", true)
-  end)
-  if not status then
-    vim.notify("Error handling backspace: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Backspace", silent = true })
+-- Backspace in insert mode - ลบทีละ 1 ตัวอักษร
+-- ไม่ต้อง remap ให้ใช้ค่า default ของ neovim
+-- vim.keymap.set("i", "<BS>", "<BS>", { desc = "Backspace", silent = true })
 
 -- Delete key in insert mode - delete selected text if any, otherwise normal delete
 vim.keymap.set("i", "<Del>", function()

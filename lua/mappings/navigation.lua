@@ -65,7 +65,8 @@ vim.keymap.set({ "n", "i" }, "<C-c>", function()
     -- Check if we're in the home screen/dashboard
     local bufname = vim.fn.bufname()
     if bufname == "" or bufname:match("dashboard") or bufname:match("alpha") then
-      -- Quit Neovim completely
+      -- Save all and quit Neovim completely
+      vim.cmd("wall")
       vim.cmd("qa")
     else
       -- Auto-save the current buffer and return to home screen

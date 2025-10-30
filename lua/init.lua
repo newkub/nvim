@@ -47,7 +47,7 @@ vim.schedule = function(fn)
 end
 
 -- Additional settings for insert mode behavior
-vim.opt.backspace = "indent,eol,start"  -- Allow backspacing over everything in insert mode
+-- vim.opt.backspace = "indent,eol,start"  -- ปิดเพื่อให้ backspace ลบทีละ 1 ตัวอักษรเหมือน space
 vim.opt.whichwrap = "b,s,<,>,[,]"       -- Allow wrapping of cursor to prev/next line
 
 -- Enable view options to save cursor position and other view settings

@@ -30,8 +30,22 @@ return {
         ["<C-e>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp.mapping(function(fallback)
-          -- เลื่อน cursor ไปยัง word ถัดไป
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-o>w", true, false, true), "n", false)
+          -- ตรวจสอบว่ามี Windsurf suggestion หรือไม่ (ให้ Windsurf จัดการก่อน)
+          local has_codeium, codeium_vt = pcall(require, "codeium.virtual_text")
+          if has_codeium and codeium_vt and codeium_vt.visible() then
+            -- ถ้ามี Windsurf suggestion ให้ fallback (Windsurf จะ handle)
+            fallback()
+            return
+          end
+          
+          -- ถ้าไม่มี Windsurf suggestion, ตรวจสอบ cmp
+          if cmp.visible() then
+            -- ถ้า autocomplete เปิดอยู่ -> accept completion
+            cmp.confirm({ select = true })
+          else
+            -- ถ้าไม่มี autocomplete -> เลื่อน cursor ไปยัง word ถัดไป
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-o>w", true, false, true), "n", false)
+          end
         end, { "i", "s" }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then

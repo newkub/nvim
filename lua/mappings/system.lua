@@ -69,15 +69,18 @@ end, { desc = "Paste from Clipboard" })
 -- Ctrl+C in insert mode to exit to normal mode
 vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Exit to Normal Mode" })
 
--- Ctrl+C in normal mode to quit Neovim
+-- Ctrl+C in normal mode to save all and quit Neovim
 vim.keymap.set("n", "<C-c>", function()
   local status, err = pcall(function()
+    -- Save all modified buffers first
+    vim.cmd("wall")
+    -- Then quit all
     vim.cmd("qa")
   end)
   if not status then
     vim.notify("Error quitting Neovim: " .. tostring(err), vim.log.levels.ERROR)
   end
-end, { desc = "Quit Neovim" })
+end, { desc = "Save All and Quit" })
 
 vim.keymap.set("v", "<C-S-c>", function()
   local status, err = pcall(function()

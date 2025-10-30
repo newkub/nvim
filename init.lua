@@ -21,6 +21,14 @@ vim.opt.background = "dark"
 vim.opt.number = true
 vim.opt.backspace = "indent,eol,start"
 
+-- Indentation settings
+vim.opt.autoindent = true      -- Copy indent from current line when starting new line
+vim.opt.smartindent = true     -- Smart autoindenting when starting a new line
+vim.opt.expandtab = true       -- Use spaces instead of tabs
+vim.opt.tabstop = 2            -- Number of spaces that a <Tab> counts for
+vim.opt.shiftwidth = 2         -- Number of spaces to use for each step of (auto)indent
+vim.opt.softtabstop = 2        -- Number of spaces that a <Tab> counts for while editing
+
 -- Enhanced swap file settings to prevent E325 errors
 vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"
 vim.opt.swapfile = true
