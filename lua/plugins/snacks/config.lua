@@ -63,7 +63,16 @@ return {
       on_error = function(err)
         vim.notify("Picker error: " .. tostring(err), vim.log.levels.ERROR)
       end
-    }
+    },
+    win = {
+      input = {
+        keys = {
+          -- เพิ่ม Ctrl+P และ Ctrl+R สำหรับสลับระหว่าง pickers
+          ["<C-p>"] = { "picker_files", mode = { "n", "i" } },
+          ["<C-r>"] = { "picker_recent", mode = { "n", "i" } },
+        },
+      },
+    },
   },
   profiler = {},
   quickfile = { enabled = true },

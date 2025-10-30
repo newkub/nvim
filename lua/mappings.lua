@@ -226,15 +226,15 @@ vim.keymap.set({ "n", "i" }, "<C-r>", function()
   end
 end, { desc = "Recent Files Picker" })
 
--- Ctrl+P to open smart file picker
+-- Ctrl+P to open file picker
 vim.keymap.set({ "n", "i" }, "<C-p>", function()
   local status, err = pcall(function()
-    require("snacks").picker.smart()
+    require("snacks").picker.files()
   end)
   if not status then
-    vim.notify("Error opening smart file picker: " .. tostring(err), vim.log.levels.ERROR)
+    vim.notify("Error opening file picker: " .. tostring(err), vim.log.levels.ERROR)
   end
-end, { desc = "Smart File Picker" })
+end, { desc = "File Picker" })
 
 -- Ctrl+L to switch back to the last visited file (like VS Code)
 vim.keymap.set({ "n", "i" }, "<C-l>", function()
