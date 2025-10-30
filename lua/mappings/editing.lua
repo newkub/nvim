@@ -10,6 +10,9 @@ return {
     ["<A-Up>"] = { ":m-2<CR>", "Move Line Up" },
     ["<A-Down>"] = { ":m+1<CR>", "Move Line Down" },
 
+    -- Move to next word
+    ["<Tab>"] = { "w", "Move to next word" },
+
     -- Cut/Copy/Paste
     ["<C-v>"] = { '"+P', "Paste" },
 
@@ -36,6 +39,7 @@ return {
   v = {
     -- Cut/Copy/Paste
     ["<C-x>"] = { '"+d', "Cut Selection" },
+    ["<C-c>"] = { '"+y', "Copy Selection" },
     ["<C-v>"] = { '"+P', "Paste" },
     ["<C-a>"] = { "ggVG", "Select All" },
   },
