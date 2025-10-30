@@ -43,27 +43,6 @@ vim.keymap.set("i", "<C-BS>", function()
   end
 end, { desc = "Delete word backward" })
 
--- Ctrl+X to delete entire line in insert mode (like VS Code)
-vim.keymap.set("i", "<C-x>", function()
-  local status, err = pcall(function()
-    -- Exit to normal mode, cut the line to the system clipboard, then go back to insert mode
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>"+ddi', true, false, true), 'n', true)
-  end)
-  if not status then
-    vim.notify("Error deleting line: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Delete entire line" })
-
--- Ctrl+X to delete entire line in normal mode (like VS Code)
-vim.keymap.set("n", "<C-x>", function()
-  local status, err = pcall(function()
-    -- Cut the current line to the system clipboard
-    vim.cmd('normal! "+dd')
-  end)
-  if not status then
-    vim.notify("Error deleting line: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Delete entire line" })
 
 -- Backspace in insert mode - ลบทีละ 1 ตัวอักษร
 -- ไม่ต้อง remap ให้ใช้ค่า default ของ neovim
@@ -234,5 +213,16 @@ vim.keymap.set("n", "<A-Right>", function()
   end
 end, { desc = "Go Forward" })
 
--- Ctrl+C to copy selected text in visual mode
-vim.keymap.set('v', '<C-c>', '"+y', { noremap = true, silent = true })
+-- VS Code style Cut/Copy/Paste
+
+-- Cut line (Normal and Visual mode)
+vim.keymap.set({ 'n', 'v' }, '<C-x>', '"+dd', { desc = 'Cut Line' })
+-- Cut line (Insert mode)
+vim.keymap.set('i', '<C-x>', '<Esc>"+ddi', { desc = 'Cut Line' })
+
+-- The <C-c> mapping was moved to system.lua to handle the exit behavior.
+
+-- Paste (Normal and Visual mode)
+vim.keymap.set({ 'n', 'v' }, '<C-v>', '"+P', { desc = 'Paste' })
+-- Paste (Insert mode)
+vim.keymap.set('i', '<C-v>', '<C-r>+', { desc = 'Paste' })

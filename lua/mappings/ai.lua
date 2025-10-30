@@ -85,10 +85,4 @@ vim.keymap.set("i", "<M-[>", function()
   end
 end, { desc = "Windsurf: Previous Suggestion" })
 
--- Clear virtual text
-vim.keymap.set("i", "<C-x>", function()
-  local status, codeium = pcall(require, "codeium.virtual_text")
-  if status then
-    codeium.clear()
-  end
-end, { desc = "Windsurf: Clear Suggestion" })
+-- The keymap for <C-x> was removed to avoid conflict with 'cut line' functionality.

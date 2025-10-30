@@ -59,24 +59,7 @@ vim.keymap.set("n", "<Esc>", function()
   end
 end, { desc = "Toggle Insert Mode" })
 
--- Ctrl+C to auto-save and return to home screen (from both normal and insert modes)
-vim.keymap.set({ "n", "i" }, "<C-c>", function()
-  local status, err = pcall(function()
-    -- Check if we're in the home screen/dashboard
-    local bufname = vim.fn.bufname()
-    if bufname == "" or bufname:match("dashboard") or bufname:match("alpha") then
-      -- Save all and quit Neovim completely
-      vim.cmd("wall")
-      vim.cmd("qa")
-    else
-      -- Auto-save the current buffer and return to home screen
-      safe_dashboard()
-    end
-  end)
-  if not status then
-    vim.notify("Error handling Ctrl+C: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Auto-save and Return to Home" })
+-- The keymap for <C-c> was removed to avoid conflict with 'copy' functionality.
 
 -- Ctrl+Shift+C to force return to dashboard (discard unsaved changes)
 vim.keymap.set({ "n", "i" }, "<C-S-c>", function()
@@ -168,7 +151,7 @@ vim.keymap.set("n", "<C-2>", function()
   end
 end, { desc = "Focus Second Editor Group" })
 
--- Ctrl+W to close editor (like VS Code)
+-- Ctrl+W to close editor (like VS Code) - Normal mode only
 vim.keymap.set("n", "<C-w>", function()
   local status, err = pcall(function()
     -- Close current window

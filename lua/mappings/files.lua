@@ -30,8 +30,15 @@ vim.keymap.set({ "n", "i" }, "<S-f>", function()
   end
 end, { desc = "File Picker" })
 
--- Ctrl+F to open file picker grep
+-- Ctrl+F to find in current buffer (like VS Code)
 vim.keymap.set({ "n", "i" }, "<C-f>", function()
+  -- This is a placeholder. For a true VS Code experience, a plugin like flash.nvim or telescope is needed.
+  -- For now, we map it to the default search.
+  vim.api.nvim_feedkeys("/", "n", true)
+end, { desc = "Find in File" })
+
+-- Ctrl+Shift+F to open file picker grep (like VS Code)
+vim.keymap.set({ "n", "i" }, "<C-S-f>", function()
   local status, err = pcall(function()
     require("snacks").picker.grep()
   end)

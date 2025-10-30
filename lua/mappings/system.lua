@@ -65,29 +65,12 @@ vim.keymap.set("n", "<C-S-v>", function()
   end
 end, { desc = "Paste from Clipboard" })
 
--- Ctrl+Shift+C to copy to clipboard (like VS Code)
--- Ctrl+C in insert mode to exit to normal mode
+-- Two-step Ctrl+C behavior:
+-- 1. In Insert mode, pressing Ctrl+C goes to Normal mode.
+-- 2. In Normal mode, pressing Ctrl+C quits Neovim.
+
 vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Exit to Normal Mode" })
 
--- Ctrl+C in normal mode to save all and quit Neovim
 vim.keymap.set("n", "<C-c>", function()
-  local status, err = pcall(function()
-    -- Save all modified buffers first
-    vim.cmd("wall")
-    -- Then quit all
-    vim.cmd("qa")
-  end)
-  if not status then
-    vim.notify("Error quitting Neovim: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Save All and Quit" })
-
-vim.keymap.set("v", "<C-S-c>", function()
-  local status, err = pcall(function()
-    -- Copy to system clipboard
-    vim.cmd("normal \"+y")
-  end)
-  if not status then
-    vim.notify("Error copying to clipboard: " .. tostring(err), vim.log.levels.ERROR)
-  end
-end, { desc = "Copy to Clipboard" })
+  vim.cmd("q")
+end, { desc = "Quit Neovim" })
