@@ -38,5 +38,5 @@ vim.opt.updatetime = 8000  -- Increase update time to reduce swap file writes
 vim.opt.signcolumn = "yes"  -- Always show sign column for Git signs
 
 -- Cursor settings
-vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25-blinkwait200-blinkon200-blinkoff150,r-cr:hor20,o:hor50"
+vim.opt.guicursor = "a:ver25-blinkon0"
 vim.opt.cursorline = true

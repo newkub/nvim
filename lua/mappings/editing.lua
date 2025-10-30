@@ -11,7 +11,6 @@ return {
     ["<A-Down>"] = { ":m+1<CR>", "Move Line Down" },
 
     -- Cut/Copy/Paste
-    ["<C-x>"] = { '"+dd', "Cut Line" },
     ["<C-v>"] = { '"+P', "Paste" },
 
     -- Select All
@@ -27,7 +26,6 @@ return {
     ["<C-BS>"] = { "<C-w>", "Delete Word Backward" },
 
     -- Cut/Paste
-    ["<C-x>"] = { "<Esc>ddi", "Cut Line" },
     ["<C-v>"] = { "<C-r>+", "Paste" },
 
     -- Select All
