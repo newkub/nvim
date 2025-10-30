@@ -59,6 +59,7 @@ return {
   },
   picker = { 
     enabled = true,
+    ui = "snacks",
     sources = {
       files = {
         hidden = true,  -- แสดง hidden files และ folders (ที่ขึ้นต้นด้วย .)

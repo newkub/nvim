@@ -84,15 +84,15 @@ vim.keymap.set("n", "<leader>e", function()
   end
 end, { desc = "File Explorer" })
 
--- F1 to open file picker (override default help) - works in both normal and insert modes
+-- F1 to open command palette (Telescope)
 vim.keymap.set({ "n", "i" }, "<F1>", function()
   local status, err = pcall(function()
-    require("snacks").picker()
+    vim.cmd("Telescope commands")
   end)
   if not status then
-    vim.notify("Error opening picker: " .. tostring(err), vim.log.levels.ERROR)
+    vim.notify("Error opening command palette: " .. tostring(err), vim.log.levels.ERROR)
   end
-end, { desc = "File Picker", noremap = true, silent = true })
+end, { desc = "Command Palette", noremap = true, silent = true })
 
 -- Ctrl+Shift+P to open command palette (like VS Code)
 vim.keymap.set({ "n", "i" }, "<C-S-p>", function()

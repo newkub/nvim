@@ -209,7 +209,7 @@ end, { desc = "File Explorer" })
 -- F1 to open file picker (override default help) - works in both normal and insert modes
 vim.keymap.set({ "n", "i" }, "<F1>", function()
   local status, err = pcall(function()
-    require("snacks").picker()
+    require("snacks").picker.files()
   end)
   if not status then
     vim.notify("Error opening picker: " .. tostring(err), vim.log.levels.ERROR)
