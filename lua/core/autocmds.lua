@@ -104,12 +104,3 @@ vim.api.nvim_create_autocmd({"BufReadPre"}, {
   end,
 })
 
--- Open file picker on startup
-vim.api.nvim_create_autocmd("VimEnter", {
-  pattern = "*",
-  callback = function()
-    if vim.fn.argc() == 0 then -- Only run if no file was specified
-      pcall(function() require("snacks").picker.files() end)
-    end
-  end,
-})
