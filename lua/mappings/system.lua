@@ -60,12 +60,14 @@ return {
 
     -- Quit Neovim
     ["<C-c>"] = { function() vim.cmd("q!") end, "Quit Neovim" },
-
-    -- Copy Line
-    ["<C-y>"] = { '"+yy', "Copy Line" },
     
     -- Toggle/Focus Terminal
     ["<C-l>"] = { toggle_or_focus_terminal, "Focus Terminal" },
+    
+    -- Undo/Redo (VS Code style)
+    ["<C-z>"] = { "u", "Undo" },
+    ["<C-S-z>"] = { "<C-r>", "Redo" },
+    ["<C-y>"] = { "<C-r>", "Redo" },
   },
 
   i = {
@@ -81,11 +83,59 @@ return {
     
     -- Toggle/Focus Terminal
     ["<C-l>"] = { toggle_or_focus_terminal, "Focus Terminal" },
+    
+    -- Undo/Redo (VS Code style)
+    ["<C-z>"] = { "<C-o>u", "Undo" },
+    ["<C-S-z>"] = { "<C-o><C-r>", "Redo" },
+    ["<C-y>"] = { "<C-o><C-r>", "Redo" },
+    
+    -- VS Code style text selection with Shift+Arrow keys (using Select mode)
+    ["<S-Right>"] = { "<C-o>vl<C-g>", "Select Right" },
+    ["<S-Left>"] = { "<C-o>vh<C-g>", "Select Left" },
+    ["<S-Up>"] = { "<C-o>vk<C-g>", "Select Up" },
+    ["<S-Down>"] = { "<C-o>vj<C-g>", "Select Down" },
+    ["<S-Home>"] = { "<C-o>v^<C-g>", "Select to Start of Line" },
+    ["<S-End>"] = { "<C-o>v$<C-g>", "Select to End of Line" },
+    
+    -- Select word by word (VS Code style: Shift+Ctrl+Arrow)
+    ["<S-C-Right>"] = { "<C-o>vw<C-g>", "Select Word Right" },
+    ["<S-C-Left>"] = { "<C-o>vb<C-g>", "Select Word Left" },
   },
 
   v = {
-    -- Copy Selection
-    ["<C-y>"] = { '"+y', "Copy Selection" },
+    -- Continue selection with Shift+Arrow keys (switch to select mode)
+    ["<S-Right>"] = { "l<C-g>", "Extend Selection Right" },
+    ["<S-Left>"] = { "h<C-g>", "Extend Selection Left" },
+    ["<S-Up>"] = { "k<C-g>", "Extend Selection Up" },
+    ["<S-Down>"] = { "j<C-g>", "Extend Selection Down" },
+    ["<S-Home>"] = { "^<C-g>", "Extend Selection to Start of Line" },
+    ["<S-End>"] = { "$<C-g>", "Extend Selection to End of Line" },
+    
+    -- Select word by word
+    ["<S-C-Right>"] = { "w<C-g>", "Extend Selection Word Right" },
+    ["<S-C-Left>"] = { "b<C-g>", "Extend Selection Word Left" },
+  },
+  
+  s = {
+    -- Continue selection in Select mode with Shift
+    ["<S-Right>"] = { "<Right>", "Extend Selection Right" },
+    ["<S-Left>"] = { "<Left>", "Extend Selection Left" },
+    ["<S-Up>"] = { "<Up>", "Extend Selection Up" },
+    ["<S-Down>"] = { "<Down>", "Extend Selection Down" },
+    ["<S-Home>"] = { "<Home>", "Extend Selection to Start of Line" },
+    ["<S-End>"] = { "<End>", "Extend Selection to End of Line" },
+    
+    -- Select word by word with Shift+Ctrl
+    ["<S-C-Right>"] = { "<C-Right>", "Extend Selection Word Right" },
+    ["<S-C-Left>"] = { "<C-Left>", "Extend Selection Word Left" },
+    
+    -- Cancel selection when arrow keys without Shift (go back to insert mode)
+    ["<Right>"] = { "<Esc>i<Right>", "Cancel Selection and Move Right" },
+    ["<Left>"] = { "<Esc>i<Left>", "Cancel Selection and Move Left" },
+    ["<Up>"] = { "<Esc>i<Up>", "Cancel Selection and Move Up" },
+    ["<Down>"] = { "<Esc>i<Down>", "Cancel Selection and Move Down" },
+    ["<Home>"] = { "<Esc>i<Home>", "Cancel Selection and Move to Start" },
+    ["<End>"] = { "<Esc>i<End>", "Cancel Selection and Move to End" },
   },
 
   t = {
