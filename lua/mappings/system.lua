@@ -50,6 +50,9 @@ return {
   n = {
     -- Command Palette (VS Code style: F1)
     ["<F1>"] = { function() require("snacks").picker() end, "Pick a Picker", { noremap = true, silent = true } },
+    
+    -- Rename File (VS Code style: F2)
+    ["<F2>"] = { function() require("snacks").rename.rename_file() end, "Rename File", { noremap = true, silent = true } },
 
     -- File Pickers
     ["<C-p>"] = { function() require("snacks").picker.files() end, "Pick Files", { noremap = true, silent = true } },
