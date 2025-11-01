@@ -79,3 +79,40 @@ autocmd("BufReadPre", {
   end,
 })
 
+-- Insert mode on enter
+augroup("InsertModeOnEnter", { clear = true })
+autocmd("BufEnter", {
+  group = "InsertModeOnEnter",
+  pattern = "*",
+  callback = function()
+    -- ใช้ vim.schedule เพื่อหน่วงเวลาให้ buffer พร้อมก่อน
+    vim.schedule(function()
+      local bufname = vim.fn.bufname()
+      local buftype = vim.bo.buftype
+      -- เข้า insert mode เมื่อเปิดไฟล์ปกติเท่านั้น
+      if buftype == "" and bufname ~= "" and not bufname:match("dashboard") and not bufname:match("alpha") and not bufname:match("NvimTree") and not bufname:match("term://") then
+        -- เช็คว่ายังอยู่ใน normal mode
+        if vim.fn.mode() == "n" then
+          vim.cmd("startinsert")
+        end
+      end
+    end)
+  end,
+})
+
+-- Terminal settings
+augroup("TerminalSettings", { clear = true })
+autocmd("TermOpen", {
+  group = "TerminalSettings",
+  pattern = "*",
+  callback = function()
+    -- ปิด line numbers ใน terminal
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = "no"
+    
+    -- ตั้งค่าให้ terminal เข้า insert mode อัตโนมัติ
+    vim.cmd("startinsert")
+  end,
+})
+

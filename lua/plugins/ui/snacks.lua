@@ -85,7 +85,12 @@ return {
         },
       },
     },
-    terminal = {},
+    terminal = {
+      win = {
+        style = "terminal",
+      },
+      shell = "pwsh",
+    },
     words = { enabled = true },
     styles = {
       notification = {}
