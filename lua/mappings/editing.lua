@@ -30,7 +30,9 @@ return {
 
     -- Cut/Paste
     ["<C-v>"] = { "<C-r>+", "Paste" },
-    ["<C-x>"] = { "<C-o>dd", "Delete Line" },
+    ["<C-x>"] = { function()
+      vim.cmd("normal! dd")
+    end, "Delete Line", { noremap = true, silent = true } },
 
     -- Select All
     ["<C-a>"] = { "<C-o>ggVG", "Select All" },

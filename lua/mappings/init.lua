@@ -16,8 +16,8 @@ function M.setup()
       for key, map in pairs(maps) do
         local action = map[1]
         local desc = map[2]
-        local opts = map[3] or {}
-        opts.desc = desc
+        local extra_opts = map[3] or {}
+        local opts = vim.tbl_extend("force", { desc = desc }, extra_opts)
         vim.keymap.set(mode, key, action, opts)
       end
     end
