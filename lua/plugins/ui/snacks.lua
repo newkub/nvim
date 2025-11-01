@@ -63,6 +63,20 @@ return {
           keys = {
             ["<C-p>"] = { "picker_files", mode = { "n", "i" } },
             ["<C-r>"] = { "picker_recent", mode = { "n", "i" } },
+            ["<Esc>"] = { "close", mode = { "n", "i" } },
+            ["<C-c>"] = { "close", mode = { "n", "i" } },
+          },
+        },
+        list = {
+          keys = {
+            ["<Esc>"] = { "close", mode = { "n", "i" } },
+            ["<C-c>"] = { "close", mode = { "n", "i" } },
+          },
+        },
+        preview = {
+          keys = {
+            ["<Esc>"] = { "close", mode = { "n", "i" } },
+            ["<C-c>"] = { "close", mode = { "n", "i" } },
           },
         },
       },

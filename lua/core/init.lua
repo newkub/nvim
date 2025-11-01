@@ -25,6 +25,14 @@ vim.opt.rtp:prepend(lazypath)
 -- Load plugins
 require("lazy").setup("plugins")
 
+-- Load keymaps after plugins
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  callback = function()
+    require("mappings").setup()
+  end,
+})
+
 -- Open file picker on first start
 vim.api.nvim_create_autocmd("VimEnter", {
   once = true,

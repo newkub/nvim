@@ -49,7 +49,11 @@ end
 return {
   n = {
     -- Command Palette (VS Code style: F1)
-    ["<F1>"] = { function() require("snacks").picker() end, "Pick a Picker" },
+    ["<F1>"] = { function() require("snacks").picker() end, "Pick a Picker", { noremap = true, silent = true } },
+
+    -- File Pickers
+    ["<C-p>"] = { function() require("snacks").picker.files() end, "Pick Files", { noremap = true, silent = true } },
+    ["<C-r>"] = { function() require("snacks").picker.recent() end, "Pick Recent Files", { noremap = true, silent = true } },
 
     -- Open Terminal (VS Code style: Ctrl+`)
     ["<C-`>"] = { ":terminal pwsh<CR>", "Open Terminal" },
@@ -65,6 +69,13 @@ return {
   },
 
   i = {
+    -- Command Palette (VS Code style: F1)
+    ["<F1>"] = { function() require("snacks").picker() end, "Pick a Picker", { noremap = true, silent = true } },
+    
+    -- File Pickers
+    ["<C-p>"] = { function() require("snacks").picker.files() end, "Pick Files", { noremap = true, silent = true } },
+    ["<C-r>"] = { function() require("snacks").picker.recent() end, "Pick Recent Files", { noremap = true, silent = true } },
+    
     -- Exit to Normal Mode
     ["<C-c>"] = { "<Esc>", "Exit to Normal Mode" },
     
