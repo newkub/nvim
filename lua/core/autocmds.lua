@@ -100,6 +100,17 @@ autocmd("BufEnter", {
   end,
 })
 
+-- Auto file picker
+augroup("AutoFilePicker", { clear = true })
+autocmd("VimEnter", {
+  group = "AutoFilePicker",
+  pattern = "*",
+  callback = function()
+    -- เรียก file picker จาก snack nvim เมื่อเปิดครั้งแรก
+    require("snacks").picker.files()
+  end,
+})
+
 -- Terminal settings
 augroup("TerminalSettings", { clear = true })
 autocmd("TermOpen", {
@@ -115,5 +126,3 @@ autocmd("TermOpen", {
     vim.cmd("startinsert")
   end,
 })
-
-
