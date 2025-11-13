@@ -33,10 +33,10 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
--- Open file picker on first start
-vim.api.nvim_create_autocmd("VimEnter", {
-  once = true,
-  callback = function()
-    require("snacks").picker.files()
-  end,
-})
+-- File picker disabled - open Neovim directly without picker
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   once = true,
+--   callback = function()
+--     require("snacks").picker.files()
+--   end,
+-- })
