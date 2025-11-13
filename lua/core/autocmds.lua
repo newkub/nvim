@@ -106,10 +106,13 @@ autocmd("VimEnter", {
   group = "AutoFilePicker",
   pattern = "*",
   callback = function()
-    -- เรียก file picker จาก snack nvim เมื่อเปิดครั้งแรก
-    require("snacks").picker.files()
+    -- เปิด file picker เฉพาะเมื่อไม่มีไฟล์ใดถูกเปิด
+    if vim.fn.argc() == 0 then
+      require("snacks").picker.files()
+    end
   end,
 })
+
 
 -- Terminal settings
 augroup("TerminalSettings", { clear = true })
