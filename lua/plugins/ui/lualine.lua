@@ -57,6 +57,19 @@ return {
 							return #clients > 0 and "LSP:" .. #clients or ""
 						end,
 					},
+					{
+						function()
+							local ok, snacks = pcall(require, "snacks")
+							if not ok or not snacks.profiler then
+								return ""
+							end
+							local status = snacks.profiler.status()
+							if type(status) == "function" then
+								return status()
+							end
+							return ""
+						end,
+					},
 					"filetype",
 				},
 				lualine_y = { "progress" },
