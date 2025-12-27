@@ -11,7 +11,7 @@ return function()
 
 			if vim.fn.has("nvim-0.11") == 1 then
 				vim._print = function(_, ...)
-					pcall(dd, ...)
+					pcall(_G.dd, ...)
 				end
 			else
 				vim.print = _G.dd

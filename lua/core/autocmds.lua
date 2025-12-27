@@ -99,38 +99,24 @@ autocmd("BufWinEnter", {
 	end,
 })
 
-local function set_codeium_tab_accept()
-	vim.defer_fn(function()
-		vim.keymap.set("i", "<Tab>", function()
-			local ok_vt, vt = pcall(require, "codeium.virtual_text")
-			if ok_vt and vt and type(vt.accept) == "function" then
-				local ok_accept, accepted = pcall(vt.accept)
-				if ok_accept and type(accepted) == "string" and accepted ~= "" then
-					return accepted
-				end
-			end
-
-			local ok_fn, accepted_fn = pcall(function()
-				return vim.fn["codeium#Accept"]("")
-			end)
-			if ok_fn and type(accepted_fn) == "string" and accepted_fn ~= "" then
-				return accepted_fn
-			end
-			return "<Tab>"
-		end, { noremap = true, silent = true, expr = true, replace_keycodes = true })
-	end, 80)
-end
-
 augroup("CodeiumTabAccept", { clear = true })
 autocmd("User", {
 	group = "CodeiumTabAccept",
 	pattern = "VeryLazy",
-	callback = set_codeium_tab_accept,
+	callback = function()
+		vim.defer_fn(function()
+			require("core.codeium").setup_tab_mapping()
+		end, 80)
+	end,
 })
 autocmd("InsertEnter", {
 	group = "CodeiumTabAccept",
 	pattern = "*",
-	callback = set_codeium_tab_accept,
+	callback = function()
+		vim.defer_fn(function()
+			require("core.codeium").setup_tab_mapping()
+		end, 80)
+	end,
 })
 
 -- Insert mode on enter
