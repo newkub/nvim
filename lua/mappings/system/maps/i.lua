@@ -73,6 +73,8 @@ return {
 	["<C-S-z>"] = { "<Esc><C-r>", "Redo" },
 	["<C-y>"] = { "<Esc><C-r>", "Redo" },
 
+	["<C-CR>"] = { "<C-o>j", "Cursor Down", { noremap = true, silent = true } },
+
 	["<S-Right>"] = { "<Esc>vl<C-g>", "Select Right" },
 	["<S-Left>"] = { "<Esc>vh<C-g>", "Select Left" },
 	["<S-Up>"] = { "<Esc>vk<C-g>", "Select Up" },
