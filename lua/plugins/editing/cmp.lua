@@ -7,7 +7,7 @@ return {
 		keymap = {
 			preset = "default",
 			["<C-space>"] = { "show", "fallback" },
-			["<Tab>"] = false,
+			["<Tab>"] = { "accept", "fallback" },
 			["<S-Tab>"] = false,
 		},
 		appearance = {
