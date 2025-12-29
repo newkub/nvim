@@ -44,6 +44,16 @@ function M.go_home()
 end
 
 function M.open_cmdline()
+	local ft = vim.bo.filetype or ""
+	local bt = vim.bo.buftype or ""
+	local name = vim.fn.bufname() or ""
+	if bt == "prompt" or bt == "nofile" then
+		return
+	end
+	if ft:match("snacks") or name:lower():match("snacks") then
+		return
+	end
+
 	vim.schedule(function()
 		local mode = vim.api.nvim_get_mode().mode
 		if mode == "t" then

@@ -1,13 +1,22 @@
 local actions = require("mappings.system.actions")
 
 return {
-	["<C-l>"] = {
+	["<C-l>"] = { actions.toggle_or_focus_terminal, "Toggle/Focus Terminal" },
+	["<C-p>"] = {
 		function()
-			local current_win = vim.api.nvim_get_current_win()
-			vim.api.nvim_win_hide(current_win)
+			require("core.commands").smart_files()
 		end,
-		"Hide Terminal",
+		"File Smart",
+		{ noremap = true, silent = true },
 	},
+	["<C-o>"] = {
+		function()
+			require("core.commands").commands_picker()
+		end,
+		"Command Palette",
+		{ noremap = true, silent = true },
+	},
+	["<C-,>"] = { actions.go_home, "Go Home", { noremap = true, silent = true } },
 
 	["<C-k>"] = { "<C-\\><C-n><C-w>w", "Focus Editor" },
 	["<Home>"] = {

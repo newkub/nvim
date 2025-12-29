@@ -10,14 +10,6 @@ return {
 		mode = "n",
 	},
 	{
-		"<C-p>",
-		safe_call(function()
-			require("snacks").picker.files()
-		end, "Error opening file picker"),
-		desc = "File Picker",
-		mode = { "n", "i", "v", "s", "t" },
-	},
-	{
 		"<C-S-f>",
 		safe_call(function()
 			require("snacks").picker.files()

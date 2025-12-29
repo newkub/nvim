@@ -1,6 +1,23 @@
 local actions = require("mappings.system.actions")
 
 return {
+	["<Esc>"] = { "<Esc>i", "Toggle Mode" },
+	["<C-p>"] = {
+		function()
+			require("core.commands").smart_files()
+		end,
+		"File Smart",
+		{ noremap = true, silent = true },
+	},
+	["<C-o>"] = {
+		function()
+			require("core.commands").commands_picker()
+		end,
+		"Command Palette",
+		{ noremap = true, silent = true },
+	},
+	["<C-,>"] = { actions.go_home, "Go Home", { noremap = true, silent = true } },
+
 	["<S-Right>"] = { "l<C-g>", "Extend Selection Right" },
 	["<S-Left>"] = { "h<C-g>", "Extend Selection Left" },
 	["<S-Up>"] = { "k<C-g>", "Extend Selection Up" },

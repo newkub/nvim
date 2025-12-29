@@ -2,6 +2,7 @@ return {
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -22,8 +23,9 @@ return {
 					"lua_ls",
 					"cssls",
 					"html",
-					"html",
 					"ts_ls",
+					"jsonls",
+					"rust_analyzer",
 					"pyright",
 					"bashls",
 				},
@@ -35,7 +37,6 @@ return {
 					"stylua",
 					"eslint_d",
 					"shellcheck",
-					"stylua",
 					"oxlint",
 				},
 			})

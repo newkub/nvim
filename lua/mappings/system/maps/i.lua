@@ -9,7 +9,13 @@ return {
 		{ noremap = true, silent = true },
 	},
 
-	["<Esc>"] = { "<Nop>", "Disable Escape", { noremap = true, silent = true } },
+	["<Esc>"] = {
+		function()
+			vim.cmd("stopinsert")
+		end,
+		"Toggle Mode",
+		{ noremap = true, silent = true },
+	},
 
 	[":"] = {
 		actions.open_cmdline,
@@ -23,22 +29,23 @@ return {
 		{ noremap = true, silent = true },
 	},
 
-	["<Tab>"] = {
-		function()
-			return require("core.codeium").accept_or_tab()
-		end,
-		"Tab: Accept Codeium or Next Word",
-		{ noremap = true, silent = true, expr = true, replace_keycodes = true },
-	},
-
 	["<C-p>"] = {
 		function()
 			vim.cmd("stopinsert")
-			require("snacks").picker.files()
+			require("core.commands").smart_files()
 		end,
-		"File Picker",
+		"File Smart",
 		{ noremap = true, silent = true },
 	},
+	["<C-o>"] = {
+		function()
+			vim.cmd("stopinsert")
+			require("core.commands").commands_picker()
+		end,
+		"Command Palette",
+		{ noremap = true, silent = true },
+	},
+	["<C-,>"] = { actions.go_home, "Go Home", { noremap = true, silent = true } },
 
 	["<C-S-s>"] = {
 		function()

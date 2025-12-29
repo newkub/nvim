@@ -50,7 +50,6 @@ return {
 		win = {
 			input = {
 				keys = {
-					["<C-p>"] = { "picker_files", mode = { "n", "i" } },
 					["<C-r>"] = { "picker_recent", mode = { "n", "i" } },
 					["<BS>"] = {
 						function(picker)

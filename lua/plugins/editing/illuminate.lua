@@ -10,7 +10,7 @@ return {
 				"terminal",
 				"TelescopePrompt",
 				"help",
-		},
+			},
 			providers = {
 				"lsp",
 				"treesitter",
