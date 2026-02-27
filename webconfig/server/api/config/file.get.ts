@@ -1,4 +1,4 @@
-import { ReadConfigQuerySchema } from "~/shared/types/config";
+import { ReadConfigQuerySchema } from "#shared/types/config";
 import { readConfigFileById } from "../../utils/config-files";
 
 export default defineEventHandler(async (event) => {

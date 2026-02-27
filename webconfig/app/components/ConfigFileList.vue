@@ -6,9 +6,7 @@ defineProps<{
 	selectedId: string;
 }>();
 
-defineEmits<{
-	(e: "select", id: string): void;
-}>();
+defineEmits<(e: "select", id: string) => void>();
 </script>
 
 <template>

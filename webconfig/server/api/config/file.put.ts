@@ -1,4 +1,4 @@
-import { WriteConfigBodySchema } from "~/shared/types/config";
+import { WriteConfigBodySchema } from "#shared/types/config";
 import { writeConfigFileById } from "../../utils/config-files";
 
 export default defineEventHandler(async (event) => {
